@@ -1,0 +1,98 @@
+{
+  "manifest_version": 3,
+  "name": "MR Checker",
+  "version": "1.0.0",
+  "description": "MR Checker - Stripe Checkout/Invoice Auto Hitter",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "offscreen",
+    "downloads",
+    "clipboardWrite",
+    "tabs",
+    "webNavigation",
+    "alarms"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "script/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "script/content.js"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*.hcaptcha.com/*",
+        "*://hcaptcha.com/*",
+        "*://newassets.hcaptcha.com/*"
+      ],
+      "js": [
+        "script/hcaptcha.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "options.html",
+        "script/inject.js",
+        "script/storage.js",
+        "script/autofill.js",
+        "script/binlibrary.js",
+        "script/options.js",
+        "styles.css",
+        "sounds/hit.wav",
+        "sounds/music.mp3",
+        "icons/icon64.png",
+        "icons/logo.png"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon64.png",
+      "48": "icons/icon64.png",
+      "128": "icons/logo.png"
+    },
+    "default_title": "MR Checker"
+  },
+  "icons": {
+    "16": "icons/icon64.png",
+    "48": "icons/icon64.png",
+    "128": "icons/logo.png"
+  }
+}
